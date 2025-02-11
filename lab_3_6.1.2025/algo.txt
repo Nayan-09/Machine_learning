@@ -1,0 +1,36 @@
+Algorithm FindAllPathsWithMinCost(grid, start_x, start_y, end_x, end_y):
+    Initialize visited[N][N] to False
+    Initialize all_paths as an empty list
+    Initialize min_cost to INT_MAX
+    Initialize best_path as an empty string
+    Initialize path as an empty list
+
+    Function DFS(x, y, current_path, current_cost):
+        If (x, y) == (end_x, end_y):
+            Add current_path to all_paths
+            If current_cost < min_cost:
+                Set min_cost = current_cost
+                Set best_path = current_path
+            Return
+        
+        Mark visited[x][y] as True
+
+        For each direction (up, down, left, right):
+            new_x = x + row_offset
+            new_y = y + col_offset
+            
+            If (new_x, new_y) is a valid move (not visited, not blocked):
+                Append direction to current_path
+                Call DFS(new_x, new_y, current_path, current_cost + grid[new_x][new_y])
+                Remove last direction from current_path (backtracking)
+        
+        Mark visited[x][y] as False (backtrack)
+
+    Call DFS(start_x, start_y, [], grid[start_x][start_y])
+
+    Print "Total paths found:", len(all_paths)
+    For each path in all_paths:
+        Print path
+    
+    Print "Minimum cost to reach the target:", min_cost
+    Print "Path with minimum cost:", best_path
